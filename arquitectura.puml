@@ -1,0 +1,18 @@
+@startuml
+!define RECTANGLE class
+skinparam componentStyle rectangle
+
+RECTANGLE "Interfaz de Usuario\n(Flask/Web)" as UI
+RECTANGLE "API de Servicio\n(FastAPI)" as API
+RECTANGLE "Módulo de NLP\n(CodeBERT + Transformers)" as NLP
+RECTANGLE "Base de Datos de Parches\n(SQLite + SQLAlchemy)" as DB
+RECTANGLE "Motor de Búsqueda\n(FAISS Index)" as FAISS
+
+UI --> API : POST /suggest {"issue_text": ...}
+API --> NLP : generarEmbedding(texto)
+NLP --> FAISS : consultaEmbedding(embedding)
+FAISS --> API : [patch_id, similarity,...]
+API --> DB : metadata de parches (lectura/escritura)
+API --> UI : responde sugerencias
+
+@enduml
