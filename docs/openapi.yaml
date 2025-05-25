@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: PatchSuggestion API
+  version: 0.1.0
+paths:
+  /suggest:
+    post:
+      summary: Sugiere parches de seguridad para un reporte
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                issue_text:
+                  type: string
+                  description: Texto del reporte de vulnerabilidad
+      responses:
+        '200':
+          description: Lista de parches sugeridos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patch_id:
+                      type: string
+                    similarity:
+                      type: number
+                      format: float
+                    repo_url:
+                      type: string
